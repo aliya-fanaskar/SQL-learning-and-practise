@@ -22,7 +22,10 @@ The **practise file** folder contains the following files:
 5. [**05_RegExp.sql**](https://github.com/aliya-fanaskar/MySQL-practise/blob/main/my-MySQL-practise/05_RegExp.sql)\
    String pattern matching, Wildcards with LIKE operator, REGEXP operator
    
-6. [***work-in-progress***]\
+6.  [**06_subqueries.sql**](https://github.com/aliya-fanaskar/MySQL-practise/blob/main/my-MySQL-practise/06_subqueries.sql)\
+   Introduction to Subquery, Handling Ties with Subqueries, DENSE_RANK()
+   
+7. [***work-in-progress***]\
    ...
    
 ---
