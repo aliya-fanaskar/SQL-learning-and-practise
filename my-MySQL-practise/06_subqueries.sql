@@ -1,6 +1,6 @@
 /*
 -------------------------------------------------------------------------------------------------------------------------------
-Filename         : 05_subqueries.sql
+Filename         : 06_subqueries.sql
 Level            : Intermediate
 Concepts covered : Introduction to Subquery, Handling ties with Subqueries, DENSE_RANK()
 -------------------------------------------------------------------------------------------------------------------------------
