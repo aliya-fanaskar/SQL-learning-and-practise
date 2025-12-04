@@ -1,6 +1,6 @@
 /*
 ---------------------------------------------------------------------------------------------------------------------------
-Filename         : LIKE_vs_REGEXP.sql
+Filename         : 05_RegExp.sql
 Level            : Intermediate
 Concepts covered :
   1. Wildcards with LIKE operator
