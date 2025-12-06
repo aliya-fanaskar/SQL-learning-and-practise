@@ -1,4 +1,4 @@
-# my SQL revision and practice (MySQL)
+# SQL Revision and Advanced Learning (using MySQL)
 
 This repository documents my SQL basics revision and Advanced concepts learning journey and aims at strengthening my foundational concepts for data analysis and database management.
 
@@ -10,7 +10,7 @@ The **practise file** folder contains the following files:
 1. [**01_create_tables.sql**](https://github.com/aliya-fanaskar/MySQL-practise/blob/main/my-MySQL-practise/01_create_tables.sql)\
    Creation of 3 tables - ***employee***, ***bonus*** and ***title*** tables linked to ach other using Keys
    
-2. [**02_basic_queries.sql**](https://github.com/aliya-fanaskar/MySQL-practise/blob/main/my-MySQL-practise/02_basic_queries.sql)\
+2. [**02_basic_queries.sql**](https://github.com/aliya-fanaskar/MySQL-practise/blob/main/SQL_files/02_basic_queries.sql)\
   SELECT, LIMIT-OFFSET, ALIASING, WHERE clause, Logical Operators, IN, DISTINCT, ORDER BY clause, LIKE
 
 3. [**03_basic_function_types.sql**](https://github.com/aliya-fanaskar/MySQL-practise/blob/main/my-MySQL-practise/03_basic_function_types.sql)\
