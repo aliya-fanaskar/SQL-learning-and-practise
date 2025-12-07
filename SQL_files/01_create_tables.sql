@@ -93,10 +93,10 @@ DESC employee;    -- get a quick view of the schema of the table
 INSERT INTO employee VALUES
 	(1, 'Aarav','Sharma',1,'HR Executive',35000,'2021-01-05', NULL, 103),
 	(2, 'Riya','Mehra',1,'HR Associate',30000,'2022-03-11',1, 103),
-	(3, 'Kabir','Singh',2,'Accountant',42000,'2020-07-19', NULL, NULL),
+	(3, 'Kabir','Singh',2,'Accountant',90000,'2020-07-19', NULL, NULL),
 	(4, 'Ishita','Khan',2,'Senior Accountant',60000,'2019-05-15',4, NULL),
 	(5, 'Vihaan','Singh',3,'Software Engineer',55000,'2021-11-23', NULL, 102),
-	(6, 'Aditi','Nair',3,'Junior Developer',30000,'2023-01-10',5, 102),
+	(6, 'Aditi','Nair',3,'Junior Developer',20000,'2023-01-10',5, 102),
 	(7, 'Rohan','Joshi',3,'Tech Lead',90000,'2018-08-08', NULL, 102),
 	(8, 'Neha','Kapoor',4,'Marketing Specialist',45000,'2020-02-18', NULL, 104),
 	(9, 'Tanvi','Joshi',4,'Marketing Analyst',38000,'2022-06-06',8, 104),
@@ -106,7 +106,7 @@ INSERT INTO employee VALUES
 	(13,'Meera','Rathod',6,'Sales Analyst',40000,'2021-10-22',12, 104),
 	(14,'Shruti','Chawla',3,'System Admin',50000,'2019-01-20',7, 102),
 	(15,'Kunal','Seth',2,'Finance Analyst',48000,'2022-02-14',4, NULL),
-	(16,'Priya','Singh',3,'QA Engineer',42000,'2021-09-17',7, NULL),
+	(16,'Priya','Singh',3,'QA Engineer',40000,'2021-09-17',7, NULL),
 	(17,'Sahil','Gupta',3,'Backend Dev',52000,'2020-11-11',7, 102),
 	(18,'Nidhu','Joshi',4,'Content Writer',30000,'2023-05-03',8, NULL),
 	(19,'Harsh','Goel',1,'Recruiter',33000,'2022-12-01',1, NULL),
@@ -165,7 +165,7 @@ INSERT INTO employee_info VALUES
 
 
 # ==============================
-# TABLE 5 - Bonus issued Table 
+# TABLE 5 - Bonus issued table 
 # ==============================
 -- Creating Table
 CREATE TABLE bonus(
