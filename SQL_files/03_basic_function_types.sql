@@ -219,7 +219,7 @@ USE company;          -- select the database
 
 -- COUNT() - Counts the number of rows or non-NULL values in a specified column
 SELECT COUNT(*) FROM employee;
-SELECT COUNT(DISTINCT(department)) FROM employee;
+SELECT COUNT(DISTINCT(city)) FROM employee_info;
 
 -- MAX() - Retrieves the maximum value from a specified column
 SELECT MAX(salary) AS highest FROM employee;
@@ -239,32 +239,32 @@ SELECT ROUND(AVG(salary), 1) AS avg_salary FROM employee;
 # using Basic Functions in table queries
 
 -- Get the list of Distinct Cities and count the number of characers in each city word.
-SELECT DISTINCT(city), LENGTH(city) AS characters FROM employee ORDER BY characters;
+SELECT DISTINCT(city), LENGTH(city) AS characters FROM employee_info ORDER BY characters;
 
 -- Display firstnames and lastnames of employees in Uppercase and city names in lower case
 SELECT 
 	upper(first_name) AS F_Name, 
     upper(last_name) AS L_Name,
-    lower(city) AS dept
+    lower(job_title) AS job_role
 FROM employee;
 
 -- Join the firstname and lastname of employees (First five rows)
 SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM employee LIMIT 5;
 
--- Join the firstname, lastname and city with '-' and joining seperator. (First five rows)
-SELECT CONCAT_WS('-', first_name, last_name, city) FROM employee LIMIT 5;
+-- Join the firstname, lastname and salary with '-' and joining seperator. (First five rows)
+SELECT CONCAT_WS('-', first_name, last_name, salary) FROM employee LIMIT 5;
 
 -- Display the first 3 characters of employee firstnames (First five rows)
 SELECT LEFT(first_name, 3) FROM employee LIMIT 5;
 
--- Display the last 3 characters of unique city names (First five rows)
-SELECT RIGHT(CITY, 3) FROM employee LIMIT 5;
+-- Display the last 3 characters of job titles (First five rows)
+SELECT RIGHT(job_title, 3) FROM employee LIMIT 5;
 
--- Display only 3 characters from the 4th character of employee lastnames 
-SELECT SUBSTR(last_name, 4, 3) FROM employee LIMIT 5;
+-- Display only 2 characters from the 3rd character of employee lastnames 
+SELECT SUBSTR(last_name, 3, 2) FROM employee LIMIT 5;
 
 -- Get the position of the letter 'a' from employee firstnames (First five rows)
-SELECT first_name, INSTR(first_name, 'a') FROM employee LIMIT 5;     -- give position of first occurence in case of repetition
+SELECT first_name, INSTR(first_name, 'a') AS first_A FROM employee LIMIT 5;     -- give position of first occurence in case of repetition
 SELECT first_name, POSITION('a' IN first_name) FROM employee LIMIT 5;
 
 -- Replace the letter 'a' with '@' from employee firstnames (First five rows)
@@ -280,10 +280,10 @@ SELECT REVERSE(first_name) FROM employee LIMIT 5;
 SELECT SUM(salary) AS Total_Salary FROM employee;
 
 -- Get the sum of salaries of all employees in HR dept
-SELECT department, SUM(salary) AS HR_cost FROM employee WHERE department = 'HR';
+SELECT dept_id, SUM(salary) AS dept_1_cost FROM employee WHERE dept_id = 1;
 
--- Get the sum of salaries of all Mumbai employees
-SELECT city, MAX(salary) AS Mumbai_highest FROM employee WHERE city = 'Mumbai';
+-- Get the highest salary value of a certain project 105 employee
+SELECT MAX(salary) FROM employee WHERE project_id = 105;
 
 -- Write SQL Query to Show Only Even Rows from a Table.
 SELECT * FROM employee WHERE emp_id % 2 = 0;
@@ -293,33 +293,38 @@ SELECT * FROM employee WHERE emp_id % 2 != 0;
 SELECT * FROM employee WHERE emp_id % 2 <> 0;
 
 -- Display employees info whose Salary is between 200000 & 400000
-SELECT * FROM employee WHERE salary BETWEEN 200000 AND 400000;
+SELECT * FROM employee WHERE salary BETWEEN 30000 AND 60000 ORDER BY salary;
 
 -- Fetch employee full names  and their salaries whose Salaries is between 50000 to 100000
 SELECT CONCAT(first_name, ' ', last_name) AS employee_name, salary
 FROM employee
-WHERE salary BETWEEN 50000 AND 100000
+WHERE salary BETWEEN 35000 AND 55000
 ORDER BY salary;
 
--- employees who joined in Jan 2025.
-SELECT * FROM employee WHERE YEAR(joining_date) = 2025 AND MONTH(joining_date) = 1;
+-- employees who joined in Jan 2021.
+SELECT * FROM employee WHERE YEAR(joining_date) = 2021 AND MONTH(joining_date) = 1;
 
--- employees who joined before 2024.
-SELECT * FROM employee WHERE YEAR(joining_date) < 2024 ORDER BY joining_date;
+-- arrange the rows of table by their employee joining date
+SELECT * FROM employee ORDER BY joining_date;
 
+-- employees who joined before 2020.
+SELECT * FROM employee WHERE YEAR(joining_date) < 2020 ORDER BY joining_date;
 
-# giving the table a cleaner look using these basic functions
-SELECT * FROM employee LIMIT 10;
+-- -------------------------------------------------------------------------------------------------------
+# Giving the table data a new refined look using these basic functions
+
+SELECT * FROM employee LIMIT 10;          -- Original Table
+
+SELECT emp_id, first_name, last_name, job_title, salary, joining_date FROM employee LIMIT 10;  -- columns focused
 
 SELECT 
 	LPAD(emp_id, 3, '0') AS id,                            -- padded the id number to 3 digits
     CONCAT(first_name, ' ', last_name) AS emp_fullname,    -- combined first name and last name
+    job_title,
+    (salary * 12) AS ctc,                                  -- converted salary figures in lakhs
     DAY(joining_date) AS j_date,                           -- extracted date from joining date
     LEFT(MONTHNAME(joining_date),3) AS j_month,            -- extracted month from joining date
     YEAR(joining_date) AS j_year,                          -- extracted year from joining date
-    ROUND((salary / 100000), 2) AS pay_in_lakhs,           -- converted salary figures in lakhs
-    department AS area,
-    UPPER(city) AS origin,
 	CONCAT(TRUNCATE((DATEDIFF(CURDATE(), joining_date)/365),1), ' years') AS experience  -- new experience column
 FROM employee
 LIMIT 10;
