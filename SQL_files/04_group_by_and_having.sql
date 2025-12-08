@@ -9,7 +9,6 @@ Concepts covered : GROUP BY clause, GROUP_CONCAT function, HAVING clause
 USE company;          -- select the database
 SELECT * FROM employee LIMIT 5;
 
-
 -- ---------------------------------------------------------------------------------------------------------------------------------------------
 # GROUP BY clause
 -- ---------------
@@ -18,28 +17,36 @@ same values in one or more specified columns into summary rows.
 This is frequently used in conjunction with aggregate functions 
 to perform calculations on these grouped data. */
 
--- For Example: To get the count of employees from Mumbai city, we write the following query
-SELECT COUNT(*) AS Mumbai_based_emps FROM employee WHERE city = 'Mumbai';
+-- For Example: To get the count of employees working under manager_id 7, we write the following query
+SELECT COUNT(*) AS mgr_7_emps FROM employee WHERE manager_id = 7;
 
--- similarly, To get the count of employees in the Admin department, we write the following query
-SELECT count(*) AS admin_dept_count FROM employee WHERE department = 'Admin';
+-- similarly, To get the count of employees working on project_id 105, we write the following query
+SELECT COUNT(*) AS project105_emps FROM employee WHERE project_id = 105;
 
--- But what if we need the total count of employees from each city altogether? This is where the GROUP BY is used 
+-- But what if we need the total count of employees working under each project altogether? This is where the GROUP BY is used 
 SELECT
-	city,
+	project_id,
     count(*)
 FROM employee
-GROUP BY city;
+GROUP BY project_id;
+
+-- to exclude the non-project workers count (i.e. NULL values count)
+SELECT
+	project_id,
+    count(*)
+FROM employee
+WHERE project_id IS NOT NULL
+GROUP BY project_id;
 
 -- Keep in mind that all non-aggregated columns in the SELECT list must appear in the GROUP BY clause
 
 
--- Display the no. of employees in each department
+-- Display the no. of employees from each city
 SELECT
-	department, 
+	city, 
     COUNT(*) 
-FROM employee 
-GROUP BY department;
+FROM employee_info 
+GROUP BY city;
 
 
 -- count of employee last names
@@ -51,33 +58,33 @@ GROUP BY last_name;
 
 
 -- Good practise to alias columns and order the table rows according to counts for better readability
-SELECT 
-	department AS dept, 
-    COUNT(*) AS No_of_employees
-FROM employee
-GROUP BY department
-ORDER BY No_of_employees;
+SELECT
+	city, 
+    COUNT(*) AS no_of_emps
+FROM employee_info 
+GROUP BY city
+ORDER BY no_of_emps;
 
 
 -- Count of employees in different departments from Mumbai city.
 SELECT 
-	department,
-    COUNT(*) AS from_Mumbai
+	salary,
+    COUNT(*) AS pays
 FROM employee
-WHERE city = 'Mumbai'
-GROUP BY department
-ORDER BY from_Mumbai;
+GROUP BY salary
+ORDER BY pays;
 
+select * from employee;
 
 -- get each department's count of employees, total salaries and highest and lowest salary
 SELECT 
-	department AS dept, 
+	dept_id AS dept, 
     COUNT(*) AS nos,
     SUM(salary) AS dept_cost,
     MAX(salary) AS highest_pay,
     MIN(salary) AS lowest_pay
 FROM employee
-GROUP BY department
+GROUP BY dept_id
 ORDER BY nos;
 
 
@@ -85,7 +92,7 @@ ORDER BY nos;
 SELECT 
 	city,
     COUNT(*) AS nos
-FROM employee
+FROM employee_info
 GROUP BY city
 ORDER BY nos DESC
 LIMIT 1;
@@ -95,20 +102,10 @@ LIMIT 1;
 SELECT 
 	city,
     COUNT(*) AS nos
-FROM employee
+FROM employee_info
 GROUP BY city
 ORDER BY nos
 LIMIT 1;
-
-
--- Write a query to display the count of employees for every unique department and city pair. 
-SELECT
-	department,
-    city,
-    count(*) as nos
-FROM employee
-GROUP BY department, city
-ORDER BY nos, department;
 
 
 -- ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -126,26 +123,25 @@ SYNTAX :- GROUP_CONCAT([DISTINCT] expression [ORDER BY expression ASC|DESC] [SEP
 -- get the names of employees from each list
 SELECT 
 	city,
-    GROUP_CONCAT(first_name) 
-FROM employee 
-GROUP BY city;  -- group by discussed in another file
+    GROUP_CONCAT(emp_id) 
+FROM employee_info
+GROUP BY city;  
 
 SELECT 
 	city,
-    GROUP_CONCAT(first_name ORDER BY first_name SEPARATOR ', ') 
-FROM employee 
-GROUP BY city;  -- group by discussed in another file
+    GROUP_CONCAT(emp_id ORDER BY emp_id SEPARATOR ', ') 
+FROM employee_info 
+GROUP BY city;  
 
 
 -- get the department-wise count of employees and their full names
 SELECT 
-	department,
+	dept_id,
     COUNT(*) AS frequency,
     GROUP_CONCAT(CONCAT(first_name, ' ', last_name) ORDER BY first_name SEPARATOR ', ') AS employee_names
 FROM employee 
-GROUP BY department
-ORDER BY frequency;  -- group by discussed in another file
-
+GROUP BY dept_id
+ORDER BY frequency;  
 
 -- ---------------------------------------------------------------------------------------------------------------------------------------------
 # HAVING Clause
@@ -156,69 +152,57 @@ It is used in conjunction with the GROUP BY clause.*/
 
 -- For Example: To get the count of employees in each department, we write the following query
 SELECT
-	department,
+	dept_id,
     count(*)
 FROM employee
-GROUP BY department;
+GROUP BY dept_id;
 
- -- However to get the count of employees from department(s) with only 2 employees.
+ -- However to get the count of employees from department(s) with only 3 employees.
 SELECT 
-	department,
+	dept_id,
     COUNT(*) AS frequency
 FROM employee
-GROUP BY department
-HAVING frequency = 2;
+GROUP BY dept_id
+HAVING frequency = 3;
 
 /* Unlike the WHERE clause, which filters individual rows before grouping, 
 HAVING filters the results after the GROUP BY clause has aggregated the data into groups.
 Keep in mind that WHERE filters rows before grouping, while HAVING filters groups after aggregation*/
 
--- Display the number of employees from each city and filter only those cities having 5 or more employees.
+-- Display the number of employees from each city and filter only those cities having 2 or more employees.
 SELECT
 	city, 
     COUNT(*) AS employees
-FROM employee 
+FROM employee_info 
 GROUP BY city
-HAVING employees >= 5;
+HAVING employees >= 2;
 
 
 -- Display the number of employees from each city and filter only those cities having employees between the range of 3 to 6.
 SELECT
 	city, 
     COUNT(*) AS employees
-FROM employee 
+FROM employee_info 
 GROUP BY city
-HAVING employees BETWEEN 3 AND 6;
+HAVING employees BETWEEN 2 AND 3;
 
 
 -- Department-wise total salaries
 SELECT
-	department, 
+	dept_id, 
     SUM(salary) AS dept_cost
 FROM employee 
-GROUP BY department
+GROUP BY dept_id
 ORDER BY dept_cost;
 
--- Department with total salary more than 1,000,000
+-- Department with total salary more than 1,00,000
 SELECT
-	department, 
+	dept_id, 
     SUM(salary) AS dept_cost
 FROM employee 
-GROUP BY department
-HAVING dept_cost > 1000000
+GROUP BY dept_id
+HAVING dept_cost > 100000
 ORDER BY dept_cost;
-
-
--- Write a query to display the number of employees working in each department and city.
--- Show only those department–city combinations where the count of employees is greater than 1. 
-SELECT
-	department,
-    city,
-    count(*) AS nos
-FROM employee
-GROUP BY department, city
-HAVING nos > 1
-ORDER BY department;
 
 
 -- Query to find repeated last names and show how many employees share each one
@@ -228,3 +212,19 @@ SELECT
 FROM employee
 GROUP BY last_name
 HAVING frequency > 1;
+
+-- some more examples
+
+SELECT 
+	YEAR(dob) AS birth_year,
+    COUNT(*) AS frequency
+FROM employee_info
+GROUP BY YEAR(dob)
+ORDER BY birth_year;
+
+
+SELECT 
+	YEAR(joining_date) AS joined_in,
+    COUNT(*) AS frequency
+FROM employee
+GROUP BY YEAR(joining_date);
