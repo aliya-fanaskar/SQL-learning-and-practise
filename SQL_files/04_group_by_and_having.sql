@@ -7,7 +7,6 @@ Concepts covered : GROUP BY clause, GROUP_CONCAT function, HAVING clause
 */
 
 USE company;          -- select the database
-SELECT * FROM employee LIMIT 5;
 
 -- ---------------------------------------------------------------------------------------------------------------------------------------------
 # GROUP BY clause
@@ -17,7 +16,8 @@ same values in one or more specified columns into summary rows.
 This is frequently used in conjunction with aggregate functions 
 to perform calculations on these grouped data. */
 
--- For Example: To get the count of employees working under manager_id 7, we write the following query
+-- For Example:
+-- To get the count of employees working under manager_id 7, we write the following query
 SELECT COUNT(*) AS mgr_7_emps FROM employee WHERE manager_id = 7;
 
 -- similarly, To get the count of employees working on project_id 105, we write the following query
@@ -74,7 +74,6 @@ FROM employee
 GROUP BY salary
 ORDER BY pays;
 
-select * from employee;
 
 -- get each department's count of employees, total salaries and highest and lowest salary
 SELECT 
@@ -143,6 +142,7 @@ FROM employee
 GROUP BY dept_id
 ORDER BY frequency;  
 
+
 -- ---------------------------------------------------------------------------------------------------------------------------------------------
 # HAVING Clause
 -- -------------
@@ -166,8 +166,8 @@ GROUP BY dept_id
 HAVING frequency = 3;
 
 /* Unlike the WHERE clause, which filters individual rows before grouping, 
-HAVING filters the results after the GROUP BY clause has aggregated the data into groups.
-Keep in mind that WHERE filters rows before grouping, while HAVING filters groups after aggregation*/
+HAVING filters the results after the GROUP BY clause has aggregated the data into groups.*/
+
 
 -- Display the number of employees from each city and filter only those cities having 2 or more employees.
 SELECT
@@ -195,6 +195,7 @@ FROM employee
 GROUP BY dept_id
 ORDER BY dept_cost;
 
+
 -- Department with total salary more than 1,00,000
 SELECT
 	dept_id, 
@@ -212,6 +213,7 @@ SELECT
 FROM employee
 GROUP BY last_name
 HAVING frequency > 1;
+
 
 -- some more examples
 
